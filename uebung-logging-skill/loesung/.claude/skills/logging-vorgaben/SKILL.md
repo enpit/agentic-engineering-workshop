@@ -32,7 +32,7 @@ Jeder Eintrag auf INFO oder höher enthält:
 ### 4. Was niemals geloggt wird
 - Personenbezogene Daten: Kundenname, Anschrift, Geburtsdatum
 - IBAN und Kontonummern im Klartext – erlaubt ist nur die maskierte Form `DE12****4711` (Ländercode + Prüfziffer, letzte 4 Stellen)
-- Beträge zusammen mit einem Kundenbezug im selben Eintrag
+- Beträge nie im selben Eintrag wie eine IBAN, ein Konto oder eine Kunden-ID – auch nicht maskiert
 - Verwendungszweck (Freitext, kann alles enthalten)
 - Session-Token, Passwörter, API-Keys, Authorization-Header
 - Ganze Domänenobjekte per `toString()` (enthalten zwangsläufig Obiges)

@@ -4,7 +4,9 @@
 
 Die Übung macht die Kernaussage von Folie 46 erfahrbar: *Schritt 1 (Festlegen) ist der eigentliche Aufwand – der Skill ist nur das Transportmittel.*
 
-Dafür braucht es einen sichtbaren Kontrast. Der entsteht durch einen **Vergleichslauf ohne Skill** (Schritt 0) und einen **Lauf mit dem selbst geschriebenen Skill** (Schritt 2) auf derselben Datei. Ohne Skill räumt der Agent kosmetisch auf (String-Verkettung, `System.out`, Level). Mit Skill entfernt er zusätzlich Kundendaten, IBANs, Tokens und ergänzt Korrelations-IDs – lauter Dinge, die er ohne Vorgabe nicht wissen *kann*, weil sie hausspezifische Entscheidungen sind.
+Dafür braucht es einen sichtbaren Kontrast. Der entsteht durch einen **Vergleichslauf ohne Skill** (Schritt 0) und einen **Lauf mit dem selbst geschriebenen Skill** (Schritt 2) auf derselben Datei.
+
+**Wichtig für die Moderation:** Der Kontrast liegt *nicht* darin, dass der Agent ohne Vorgabe die Datenschutzverstöße übersieht. Aktuelle Modelle entfernen Kundenname, Session-Token und Verwendungszweck auch unaufgefordert und maskieren IBANs von sich aus. Der Kontrast liegt darin, dass der Agent die **hausspezifischen Entscheidungen selbst trifft** – Maskierungsformat, Log-Level für fachliche Ablehnungen, Ablehnungscodes, Pflichtfelder – und sie in seiner Zusammenfassung so souverän benennt, dass sie wie eine Vorgabe klingen. Zwei Läufe mit demselben Prompt kommen dabei zu unterschiedlichen Ergebnissen. Wer keine Vorgabe macht, bekommt trotzdem eine – nur nicht die eigene, und jedes Mal eine andere.
 
 Die Zielgruppe (Anwendungsmanagement, 2nd-Level, Compliance) muss dafür kein Java schreiben. Ihre Aufgabe ist die fachliche: entscheiden, was gelten soll, und es prüfbar formulieren. Das ist genau ihre Rolle gegenüber den umsetzenden Teams (Fokusthema A).
 
@@ -14,23 +16,25 @@ Logging wurde als Bereich gewählt, weil jedes Team es hat, die Regeln meist hal
 
 | Zeit | Schritt | Wer | Hinweise |
 |---|---|---|---|
-| 2 Min. | 0 Vergleichslauf ohne Skill | Trainer, Beamer | Prompt: „Verbessere das Logging in UeberweisungService.java.“ Ergebnis stehen lassen, nicht kommentieren. |
+| 3 Min. | 0 Vergleichslauf ohne Skill | Trainer, Beamer | **Rohfassung vorher wegräumen** (`mv .claude/skills/logging-vorgaben /tmp/`), sonst zieht der Agent sie selbst heran. Prompt: „Verbessere das Logging in UeberweisungService.java.“ Zweimal laufen lassen, Datei dazwischen zurücksetzen. Die **Zusammenfassungen** zeigen, nicht die Diffs. |
 | 10 Min. | 1 Vorgaben festlegen | Gruppen | Rohfassung ausfüllen. Trainer geht rum und fragt bei jeder unscharfen Formulierung: „Woran erkennt der Agent, ob das erfüllt ist?“ |
 | 5 Min. | 2 Skill anwenden | Gruppen | Datei vorher zurücksetzen. Falls eine Gruppe nicht fertig wird: Lösungs-Skill aus `loesung/` kopieren, damit trotzdem alle den Effekt sehen. |
 | 3–5 Min. | 3 Auswertung | Plenum | Drei Fragen aus dem Handout. Brücke zu Folie 47 (Review-Variante) und Folie 51 (Pflege). |
 
 ## Erwartete Beobachtungen
 
-- Ohne Skill: erwartungsgemäß nur die technischen Verstöße (siehe `loesung/ERWARTETES-ERGEBNIS.md`; vor dem Workshop mit dem eingesetzten Modell einmal probelaufen, Modellverhalten variiert). Datenschutzverstöße bleiben meist stehen, weil der Agent nicht weiß, dass Kundenname und IBAN nicht ins Log dürfen – aus seiner Sicht sind das nützliche Informationen.
-- Mit Skill: Deckungsgrad hängt direkt an der Schärfe der Formulierung. Typischer Aha-Moment: Eine Gruppe schreibt „keine sensiblen Daten“ – der Agent lässt IBAN stehen, weil unklar ist, ob IBAN „sensibel“ ist. Die Nachbargruppe schreibt „IBAN nur maskiert, letzte 4 Stellen“ – funktioniert.
-- Häufiger Fehler: Gruppen schreiben Regeltext, aber keine Beispiele. Darauf hinweisen (Speaker Note Folie 47: „Ein Gegenbeispiel wirkt stärker als drei Absätze Regeltext“).
+- **Ohne Skill** (mit Opus 5 nachgestellt, Modellverhalten variiert – vor dem Workshop einmal probelaufen): Der Agent behebt die technischen Punkte **und** die Datenschutzpunkte. Er entfernt Session-Token und Kundenname, streicht den Verwendungszweck und schreibt sich eine `maskiere()`-Hilfsmethode. Von den 14 Punkten bleiben verlässlich nur die Pflichtfelder offen (10, 11, 12), Punkt 4 nur teilweise (der Betrag bleibt meist stehen).
+- **Die beiden Läufe aus Schritt 0 widersprechen sich.** Im Test stufte der eine Lauf „Tageslimit überschritten“ als WARN ein, der andere als INFO mit der Begründung, das sei ein erwarteter Geschäftsfall. Der eine löschte den ungenutzten `BigDecimal`-Import, der andere ließ ihn bewusst stehen. Das ist der stärkste Moment der Übung – darauf hinarbeiten.
+- **Mit Skill**: Der Deckungsgrad bei den Pflichtfeldern hängt direkt an der Schärfe der Formulierung. Typischer Aha-Moment: Eine Gruppe schreibt „IBAN maskieren“ – der Agent liefert `****4711`. Die Nachbargruppe schreibt „Ländercode + Prüfziffer + letzte 4 Stellen“ – und bekommt `DE12****4711`. Beides ist maskiert, nur eines ist die Hausregel.
+- **Häufiger Fehler:** Gruppen schreiben Regeltext, aber keine Beispiele. Darauf hinweisen (Speaker Note Folie 47: „Ein Gegenbeispiel wirkt stärker als drei Absätze Regeltext“).
+- **Zum Hinweis „fragt den Agenten“ in Schritt 1:** Gruppen, die sich Vorschläge geben lassen, sind schneller fertig und haben oft die besseren Formulierungen. Beim Rundgang trotzdem fragen: „Warum gilt das bei euch so?“ Wer den Vorschlag nur übernommen hat, merkt an dieser Frage selbst, dass Schritt 1 noch nicht erledigt ist.
 
 ## Inhalt des Pakets
 
 ```
 uebung-logging-skill/
-├── README.md                    diese Datei
-├── AUFGABE.md                   Teilnehmer-Handout
+├── README.md                    Teilnehmer-Handout
+├── TRAINER.md                   diese Datei
 ├── beispielprojekt/             an die Gruppen verteilen
 │   ├── CLAUDE.md
 │   ├── pom.xml                  nur damit es kompiliert; wird in der Übung nicht gebaut

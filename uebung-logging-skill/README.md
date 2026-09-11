@@ -9,7 +9,15 @@ Im Ordner `beispielprojekt/` liegt ein kleiner Java-Service `UeberweisungService
 
 Im Ordner `.claude/skills/logging-vorgaben/` liegt eine **Rohfassung** eines Skills. Die Struktur steht, der Inhalt fehlt (`TODO`).
 
-## Schritt 0 – Vergleichslauf ohne Skill (2 Min., Trainer führt vor)
+## Schritt 0 – Vergleichslauf ohne Skill (3 Min., Trainer führt vor)
+
+Damit der Lauf wirklich ohne Vorgabe stattfindet, muss die Rohfassung vorher aus dem Weg:
+
+```
+mv .claude/skills/logging-vorgaben /tmp/
+```
+
+Sonst zieht der Agent den Skill von selbst heran – seine Beschreibung passt auf den Prompt – und arbeitet dann mit einer Vorgabe, die nur aus `TODO` besteht.
 
 Claude Code im Ordner `beispielprojekt/` starten und eingeben:
 
@@ -17,7 +25,17 @@ Claude Code im Ordner `beispielprojekt/` starten und eingeben:
 Verbessere das Logging in UeberweisungService.java.
 ```
 
-Ergebnis kurz anschauen. Merkt euch: Was hat der Agent geändert, was hat er gelassen?
+Dann die Datei zurücksetzen (`git checkout -- .`) und **denselben Prompt ein zweites Mal** laufen lassen.
+
+Nicht auf den Diff schauen, sondern auf die **Zusammenfassung** des Agenten: Er benennt darin, welche Log-Level er gewählt hat, wie er IBANs maskiert und was er für schützenswert hält. Vergleicht die beiden Läufe miteinander.
+
+Merkt euch: Der Agent räumt viel auf – auch Kundenname und Token verschwinden meist. Aber er trifft dabei Entscheidungen, nach denen ihn niemand gefragt hat. Und die beiden Läufe treffen sie nicht zwangsläufig gleich.
+
+Danach die Rohfassung zurücklegen:
+
+```
+mv /tmp/logging-vorgaben .claude/skills/
+```
 
 ## Schritt 1 – Vorgaben festlegen (10 Min., Gruppenarbeit)
 
@@ -34,6 +52,15 @@ Leitfragen:
 Und: **je ein gutes und ein schlechtes Beispiel**. Das schlechte Beispiel dürft ihr gern aus `UeberweisungService.java` abschreiben.
 
 Regel: Jede Vorgabe muss an einer Codezeile entscheidbar sein. „Sinnvoll loggen“ ist keine Vorgabe. „Keine IBAN im Klartext, nur die letzten 4 Stellen“ schon.
+
+**Ihr dürft den Agenten fragen.** Wenn ihr bei einem Abschnitt unsicher seid, lasst euch Vorschläge geben, etwa:
+
+```
+Welche Log-Level-Regeln sind für einen Zahlungsverkehr-Service üblich? Nenne je Level einen Satz.
+Welche Felder gehören in jeden Log-Eintrag, damit ein 2nd-Level-Team einen Vorgang nachts wiederfindet?
+```
+
+Der Agent kennt die gängige Praxis; er kennt nur **eure** Praxis nicht. Nehmt die Vorschläge als Entwurf und entscheidet dann bewusst, was davon bei euch gilt – genau diese Entscheidung ist der Inhalt der Übung. Übernehmt nichts ungeprüft: Was ihr nicht erklären könnt, könnt ihr später auch nicht gegenüber einem Team vertreten.
 
 ## Schritt 2 – Skill anwenden (5 Min.)
 
@@ -53,7 +80,7 @@ Vergleicht mit Schritt 0:
 
 Eine Gruppe zeigt ihren Skill und das Ergebnis. Fragen an alle:
 
-1. Was hat der Agent **ohne** Skill nicht gefunden – und warum konnte er das nicht wissen?
+1. Welche Entscheidungen hat der Agent in Schritt 0 für euch getroffen, ohne zu fragen – und hättet ihr sie genauso getroffen?
 2. Wo waren eure Formulierungen so unscharf, dass der Agent geraten hat?
 3. Was war der aufwendigste Teil: der Skill schreiben, oder sich einigen, was gelten soll?
 
