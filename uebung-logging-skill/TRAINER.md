@@ -54,5 +54,5 @@ uebung-logging-skill/
 ## Varianten
 
 - **Kürzer (12–15 Min.):** Schritt 1 auf die Abschnitte 3 (Level) und 4 (niemals loggen) beschränken, Rest aus der Lösung vorgeben.
-- **Länger (30–40 Min.):** Optionalen Teil (Review-Skill) einbauen; jede Gruppe wendet ihren Skill zusätzlich als Review auf die Ausgangsdatei an und vergleicht, ob Implementierungs- und Review-Sicht dasselbe finden.
+- **Länger (30–40 Min.):** Bonusteil einbauen. Reihenfolge bleibt: erst der eigene Implementierungs-Skill (Schritt 2), danach der Review-Skill aus `loesung/` – erst laufen lassen, dann verbessern. Die Schweregrade und das Ausgabeformat dort sind bewusst diskutabel; das ist der Aufhänger. Abschlussfrage: Finden Implementierungs- und Review-Sicht dieselben Stellen?
 - **Näher am Team:** Statt Logging einen Bereich aus Folie 46 nehmen, den das Team wirklich verantwortet (Fehlerbehandlung, Security-Header). Struktur der Rohfassung bleibt gleich; nur Beispieldatei tauschen.

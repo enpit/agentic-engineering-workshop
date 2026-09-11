@@ -57,12 +57,30 @@ Eine Gruppe zeigt ihren Skill und das Ergebnis. Fragen an alle:
 2. Wo waren eure Formulierungen so unscharf, dass der Agent geraten hat?
 3. Was war der aufwendigste Teil: der Skill schreiben, oder sich einigen, was gelten soll?
 
-## Optional (wenn Zeit bleibt)
+## Bonus (wenn Zeit bleibt): dieselbe Vorgabe als Review
 
-Im Ordner `loesung/.claude/skills/logging-review/` liegt eine Review-Variante des Skills. Kopiert sie ins Beispielprojekt und lasst sie auf die **unveränderte** Ausgangsdatei laufen:
+Bis hierhin hat der Skill **Code geändert**. Dieselbe Vorgabe lässt sich auch einsetzen, ohne etwas zu ändern: als Review.
 
-```
-/logging-review Prüfe UeberweisungService.java.
-```
+1. Review-Skill ins Beispielprojekt kopieren:
 
-Ergebnis: Review-Kommentare mit Schweregrad statt Codeänderungen – dieselbe Vorgabe, zweiter Einsatzort (Folie 47, Schritt 3).
+   ```
+   cp -r ../loesung/.claude/skills/logging-review .claude/skills/
+   ```
+
+2. Ausgangsdatei zurücksetzen (`git checkout -- .`) und laufen lassen:
+
+   ```
+   /logging-review Prüfe UeberweisungService.java.
+   ```
+
+   Ergebnis: Review-Kommentare mit Schweregrad statt Codeänderungen – dieselbe Vorgabe, zweiter Einsatzort (Folie 47, Schritt 3).
+
+3. Jetzt den Review-Skill **verbessern**. Er ist bewusst nicht fertig:
+
+   - Die Schweregrade (BLOCKER/MAJOR/MINOR) sind eine Setzung. Passt sie zu eurem Haus? Ist ein fehlendes Pflichtfeld wirklich MAJOR?
+   - Der Skill prüft gegen `logging-vorgaben/SKILL.md` – also gegen **eure** Vorgaben aus Schritt 1. Findet er alles, was ihr dort festgelegt habt? Wenn nicht: liegt das am Review-Skill oder an eurer Formulierung?
+   - Fehlt im Ausgabeformat etwas, das ihr für ein echtes Review bräuchtet (Zeilennummer, Merge-Empfehlung, Verweis auf die Vorgabe)?
+
+   Ändert den Skill, setzt die Datei zurück und lasst ihn erneut laufen.
+
+**Auswertungsfrage:** Finden Implementierungs- und Review-Sicht dieselben Stellen? Wo nicht – und woran liegt das?
