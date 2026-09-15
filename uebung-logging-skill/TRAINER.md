@@ -16,8 +16,8 @@ Logging wurde als Bereich gewählt, weil jedes Team es hat, die Regeln meist hal
 
 | Zeit | Schritt | Wer | Hinweise |
 |---|---|---|---|
-| 3 Min. | 0 Vergleichslauf ohne Skill | Trainer, Beamer | **Rohfassung vorher wegräumen** (`mv .claude/skills/logging-vorgaben /tmp/`), sonst zieht der Agent sie selbst heran. Prompt: „Verbessere das Logging in UeberweisungService.java.“ Zweimal laufen lassen, Datei dazwischen zurücksetzen. Die **Zusammenfassungen** zeigen, nicht die Diffs. |
-| 10 Min. | 1 Vorgaben festlegen | Gruppen | Rohfassung ausfüllen. Trainer geht rum und fragt bei jeder unscharfen Formulierung: „Woran erkennt der Agent, ob das erfüllt ist?“ |
+| 3 Min. | 0 Vergleichslauf ohne Skill | Trainer, Beamer | Es liegt noch kein Skill im Projekt, der Lauf ist damit automatisch vorgabenfrei. Prompt: „Verbessere das Logging in UeberweisungService.java.“ Zweimal laufen lassen, Datei dazwischen zurücksetzen. Die **Zusammenfassungen** zeigen, nicht die Diffs. |
+| 10 Min. | 1 Vorgaben festlegen | Gruppen | Zwei Wege: Template `logging-vorgaben-skill-template.md` nach `.claude/skills/logging-vorgaben/SKILL.md` verschieben und ausfüllen, oder die Datei selbst anlegen (gern mit Hilfe des Agenten). Trainer geht rum und fragt bei jeder unscharfen Formulierung: „Woran erkennt der Agent, ob das erfüllt ist?“ |
 | 5 Min. | 2 Skill anwenden | Gruppen | Datei vorher zurücksetzen. Falls eine Gruppe nicht fertig wird: Lösungs-Skill aus `loesung/` kopieren, damit trotzdem alle den Effekt sehen. |
 | 3–5 Min. | 3 Auswertung | Plenum | Drei Fragen aus dem Handout. Brücke zu Folie 47 (Review-Variante) und Folie 51 (Pflege). |
 
@@ -38,7 +38,8 @@ uebung-logging-skill/
 ├── beispielprojekt/             an die Gruppen verteilen
 │   ├── CLAUDE.md
 │   ├── pom.xml                  nur damit es kompiliert; wird in der Übung nicht gebaut
-│   ├── .claude/skills/logging-vorgaben/SKILL.md     Rohfassung mit TODOs
+│   ├── .claude/skills/logging-vorgaben/             leer; hier entsteht der Skill der Gruppe
+│   ├── logging-vorgaben-skill-template.md          Rohfassung mit TODOs, optionale Starthilfe
 │   └── src/.../UeberweisungService.java             Ausgangsdatei mit 14 Verstößen
 │       └── Modell.java                              Hilfstypen, nicht Gegenstand der Übung
 └── loesung/                     nur Trainer; nach der Übung freigeben
@@ -50,13 +51,15 @@ uebung-logging-skill/
 
 ## Technische Vorbereitung
 
-- Pro Gruppe ein Laptop mit Claude Code und Zugang zum Modell. `beispielprojekt/` als Git-Repository initialisieren (`git init && git add . && git commit -m init`), damit Gruppen die Datei mit `git checkout -- .` zurücksetzen können.
-- Skill-Ablage und Aufruf: Projekt-Skills liegen unter `.claude/skills/<name>/SKILL.md` und werden per `/<name>` aufgerufen; der Name ergibt sich aus dem Ordnernamen. Quelle: https://code.claude.com/docs/en/skills
+- Pro Gruppe ein Laptop mit Claude Code und Zugang zum Modell. `beispielprojekt/` als Git-Repository initialisieren (`git init && git add . && git commit -m init`), damit Gruppen die Ausgangsdatei mit `git checkout -- src/` zurücksetzen können. Ohne diesen Schritt schlägt das Zurücksetzen in Schritt 0 und 2 fehl – im Zip-Paket ist kein `.git` enthalten. Bewusst nur `src/` und nicht `.`: Sonst holt der Befehl das verschobene Template zurück.
+- Skill-Ablage und Aufruf: Projekt-Skills liegen unter `.claude/skills/<name>/SKILL.md` und werden per `/<name>` aufgerufen; der Name ergibt sich aus dem Ordnernamen. Neu angelegte Skills greifen sofort, ohne Neustart. Quelle: https://code.claude.com/docs/en/skills
+- Das Template liegt bewusst **außerhalb** von `.claude/skills/`. Läge es drin, würde der Agent es in Schritt 0 von selbst heranziehen – seine `description` passt auf den Prompt – und mit einer Vorgabe arbeiten, die nur aus `TODO` besteht. Der Vergleichslauf wäre damit wertlos.
+- Gruppen, die Weg B wählen (Skill selbst anlegen), brauchen den Hinweis auf den Frontmatter-Kopf: ohne `name:` und `description:` taucht der Skill nicht als `/`-Befehl auf. Steht im Handout, wird aber gern überlesen.
 - Fallback bei Technikproblemen: Schritt 0 und Schritt 2 vorab aufzeichnen (Speaker Note Folie 42).
 - Der Beispielcode ist fiktiv (Bank „Beispielbank“, keine echten Daten). Er darf ohne Bedenken an das Modell übergeben werden – das ist Weg 3 aus Folie 39 (Fehlerbild nachbauen statt Produktionsdaten übergeben) und kann als Nebenbemerkung genutzt werden.
 
 ## Varianten
 
-- **Kürzer (12–15 Min.):** Schritt 1 auf die Abschnitte 3 (Level) und 4 (niemals loggen) beschränken, Rest aus der Lösung vorgeben.
+- **Kürzer (12–15 Min.):** Alle Gruppen auf Weg A festlegen (Template verschieben) und Schritt 1 auf die Abschnitte 3 (Level) und 4 (niemals loggen) beschränken, Rest aus der Lösung vorgeben.
 - **Länger (30–40 Min.):** Bonusteil einbauen. Reihenfolge bleibt: erst der eigene Implementierungs-Skill (Schritt 2), danach der Review-Skill aus `loesung/` – erst laufen lassen, dann verbessern. Die Schweregrade und das Ausgabeformat dort sind bewusst diskutabel; das ist der Aufhänger. Abschlussfrage: Finden Implementierungs- und Review-Sicht dieselben Stellen?
 - **Näher am Team:** Statt Logging einen Bereich aus Folie 46 nehmen, den das Team wirklich verantwortet (Fehlerbehandlung, Security-Header). Struktur der Rohfassung bleibt gleich; nur Beispieldatei tauschen.

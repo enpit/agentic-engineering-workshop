@@ -7,17 +7,11 @@
 
 Im Ordner `beispielprojekt/` liegt ein kleiner Java-Service `UeberweisungService.java`. Fachlich funktioniert er. Das Logging ist so, wie es in vielen Systemen aussieht: historisch gewachsen, von mehreren Personen, ohne Vorgabe.
 
-Im Ordner `.claude/skills/logging-vorgaben/` liegt eine **Rohfassung** eines Skills. Die Struktur steht, der Inhalt fehlt (`TODO`).
+Der Ordner `.claude/skills/logging-vorgaben/` ist leer – dort soll euer Skill entstehen. Als Starthilfe liegt im Projektverzeichnis die Datei `logging-vorgaben-skill-template.md`: eine Rohfassung, bei der die Struktur steht und der Inhalt fehlt (`TODO`). Ob ihr sie benutzt, entscheidet ihr in Schritt 1.
 
 ## Schritt 0 – Vergleichslauf ohne Skill (3 Min., Trainer führt vor)
 
-Damit der Lauf wirklich ohne Vorgabe stattfindet, muss die Rohfassung vorher aus dem Weg:
-
-```
-mv .claude/skills/logging-vorgaben /tmp/
-```
-
-Sonst zieht der Agent den Skill von selbst heran – seine Beschreibung passt auf den Prompt – und arbeitet dann mit einer Vorgabe, die nur aus `TODO` besteht.
+Es liegt noch kein Skill im Projekt – der Agent arbeitet also ohne jede Vorgabe.
 
 Claude Code im Ordner `beispielprojekt/` starten und eingeben:
 
@@ -25,23 +19,43 @@ Claude Code im Ordner `beispielprojekt/` starten und eingeben:
 Verbessere das Logging in UeberweisungService.java.
 ```
 
-Dann die Datei zurücksetzen (`git checkout -- .`) und **denselben Prompt ein zweites Mal** laufen lassen.
+Dann die Datei zurücksetzen (`git checkout -- src/`) und **denselben Prompt ein zweites Mal** laufen lassen.
 
 Nicht auf den Diff schauen, sondern auf die **Zusammenfassung** des Agenten: Er benennt darin, welche Log-Level er gewählt hat, wie er IBANs maskiert und was er für schützenswert hält. Vergleicht die beiden Läufe miteinander.
 
 Merkt euch: Der Agent räumt viel auf – auch Kundenname und Token verschwinden meist. Aber er trifft dabei Entscheidungen, nach denen ihn niemand gefragt hat. Und die beiden Läufe treffen sie nicht zwangsläufig gleich.
 
-Danach die Rohfassung zurücklegen:
-
-```
-mv /tmp/logging-vorgaben .claude/skills/
-```
-
 ## Schritt 1 – Vorgaben festlegen (10 Min., Gruppenarbeit)
 
-Öffnet `.claude/skills/logging-vorgaben/SKILL.md` und füllt die fünf `TODO`-Abschnitte. Ihr braucht dafür **kein Java**: Ihr entscheidet, was gelten soll, der Agent setzt es um.
+Euer Skill muss am Ende hier liegen:
 
-Leitfragen:
+```
+.claude/skills/logging-vorgaben/SKILL.md
+```
+
+Der Ordnername bestimmt den Aufruf – aus `logging-vorgaben` wird `/logging-vorgaben`. Die Datei beginnt mit einem Kopf aus `name:` und `description:` zwischen zwei `---`-Zeilen; die `description` entscheidet, ob der Agent den Skill auch von selbst heranzieht. Neu angelegte Skills sind sofort verfügbar, ein Neustart von Claude Code ist nicht nötig.
+
+Wie ihr dorthin kommt, ist euch überlassen:
+
+**Weg A – Rohfassung ausfüllen.** Verschiebt das Template an die richtige Stelle und füllt es aus:
+
+```
+mv logging-vorgaben-skill-template.md .claude/skills/logging-vorgaben/SKILL.md
+```
+
+Fünf `TODO`-Abschnitte, Kopf und Struktur sind schon da.
+
+**Weg B – selbst schreiben.** Legt `SKILL.md` direkt an, mit eurer eigenen Gliederung. Ihr dürft euch dabei vom Agenten helfen lassen, etwa:
+
+```
+Lege .claude/skills/logging-vorgaben/SKILL.md an. Gliederung: Format, Pflichtfelder,
+Log-Level, was niemals geloggt wird, Fehlerbehandlung. Lass die Regeln leer -
+die fülle ich selbst aus.
+```
+
+Ihr braucht für beide Wege **kein Java**: Ihr entscheidet, was gelten soll, der Agent setzt es um.
+
+Leitfragen für die Abschnitte:
 
 - **Format:** Freitext oder Schlüssel=Wert? Darf `System.out` vorkommen?
 - **Pflichtfelder:** Wenn nachts eine Störung ist – welches Feld muss in jedem Eintrag stehen, damit ihr den Vorgang wiederfindet?
@@ -64,7 +78,7 @@ Der Agent kennt die gängige Praxis; er kennt nur **eure** Praxis nicht. Nehmt d
 
 ## Schritt 2 – Skill anwenden (5 Min.)
 
-Ausgangsdatei zurücksetzen (`git checkout -- .` im Ordner `beispielprojekt/`), dann in Claude Code:
+Ausgangsdatei zurücksetzen (`git checkout -- src/` im Ordner `beispielprojekt/` – nur `src/`, damit euer Skill und das verschobene Template unangetastet bleiben), dann in Claude Code:
 
 ```
 /logging-vorgaben Überarbeite UeberweisungService.java.
@@ -94,7 +108,7 @@ Bis hierhin hat der Skill **Code geändert**. Dieselbe Vorgabe lässt sich auch 
    cp -r ../loesung/.claude/skills/logging-review .claude/skills/
    ```
 
-2. Ausgangsdatei zurücksetzen (`git checkout -- .`) und laufen lassen:
+2. Ausgangsdatei zurücksetzen (`git checkout -- src/`) und laufen lassen:
 
    ```
    /logging-review Prüfe UeberweisungService.java.
