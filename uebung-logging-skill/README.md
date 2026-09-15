@@ -1,7 +1,7 @@
 # Praxisaufgabe: Logging-Vorgaben als Skill übergeben
 
 **Ziel:** Eine Vorgabe so festhalten, dass ein Agent sie anwenden kann – und sehen, was das gegenüber einem „unbegleiteten“ Agenten ausmacht.
-**Zeit:** 20 Minuten. **Gruppen:** 3–4 Personen, mindestens ein Laptop mit Claude Code pro Gruppe.
+**Zeit:** 35 Minuten. **Gruppen:** 3–4 Personen, mindestens ein Laptop mit Claude Code pro Gruppe.
 
 ## Ausgangslage
 
@@ -110,7 +110,7 @@ Vergleicht mit Schritt 1:
 
 Bonus: Ihr könnt den Skill auch wie in Schritt 1 via "Verbessere das Logging in UeberweisungService.java." aufrufen - Claude entscheidet dann (*sehr wahrscheinlich*), dass der vorliegende Skill dafür genutzt werden sollte, sofern die `description` des Skills entsprechend ausgefüllt wurde.
 
-## Schritt 3 – Auswertung (10 Min., Plenum)
+## Schritt 4 – Auswertung (10 Min., Plenum)
 
 Einzelne Teilnehmer zeigen ihren Skill und das Ergebnis. Fragen an alle:
 
@@ -139,7 +139,7 @@ Bis hierhin hat der Skill **Code geändert**. Dieselbe Vorgabe lässt sich auch 
 3. Jetzt den Review-Skill **verbessern**. Er ist bewusst nicht fertig:
 
    - Die Schweregrade (BLOCKER/MAJOR/MINOR) sind Vorschläge. Passt sie zu eurem Haus? Ist ein fehlendes Pflichtfeld wirklich MAJOR?
-   - Der Skill prüft gegen `logging-vorgaben/SKILL.md` – also gegen **eure** Vorgaben aus Schritt 1. Findet er alles, was ihr dort festgelegt habt? Wenn nicht: liegt das am Review-Skill oder an eurer Formulierung?
+   - Der Skill prüft gegen `logging-vorgaben/SKILL.md` – also gegen **eure** Vorgaben aus Schritt 2. Findet er alles, was ihr dort festgelegt habt? Wenn nicht: liegt das am Review-Skill oder an eurer Formulierung?
    - Fehlt im Ausgabeformat etwas, das ihr für ein echtes Review bräuchtet (Zeilennummer, Merge-Empfehlung, Verweis auf die Vorgabe)?
    - Perspektivisch könnte der Skill sogar ein Review an den Pull Request anfügen!
 

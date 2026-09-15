@@ -14,9 +14,11 @@ Verlässlich offen bleiben nur:
 | 10, 12 | `grund=`-Codes statt Freitext. Der Agent schreibt „Tageslimit überschritten“ als Satz – auswertbar ist nur ein Code. |
 | 11 | `ergebnis=OK/ABGELEHNT/FEHLER` als festes Feld. |
 
-Dazu kommen Abweichungen, die kein „Fund“ sind, aber eben nicht eure Hausregel: Maskierungsformat (`****4711` statt `DE12****4711`), Level für fachliche Ablehnungen (INFO statt WARN), Einstiegs-Log auf DEBUG statt INFO, Nachrichtenform mit Satzzeichen statt reiner `schluessel=wert`-Paare.
+Dazu kommen Abweichungen, die kein „Fund“ sind, aber eben nicht eure Hausregel: Maskierungsformat (`****4711` statt `DE12****4711`), Level für fachliche Ablehnungen (INFO statt WARN), Einstiegs-Log auf DEBUG statt INFO, Nachrichtenform mit Satzzeichen statt reiner `schluessel=wert`-Paare – und die **Werkzeugwahl**: Der Agent tauscht das vorhandene SLF4J meist ungefragt aus (in der Regel gegen `java.util.logging`), ohne dass jemand nach der Hausbibliothek gefragt hätte.
 
 **Für die Moderation entscheidend:** Zwei Läufe ohne Skill mit identischem Prompt kamen zu *unterschiedlichen* Entscheidungen (Tageslimit einmal WARN, einmal INFO). Die Aussage der Übung ist deshalb nicht „der Agent findet es nicht“, sondern „der Agent entscheidet es für euch – jedes Mal neu, und er sagt es so selbstbewusst, dass es wie eine Vorgabe klingt“.
+
+**Modellwechsel (Bonus in Schritt 1):** Haiku ändert tendenziell weniger und begründet knapper, Opus räumt umfassender auf. Die offenen Punkte oben verschieben sich dadurch in der Menge, nicht in der Art: Die hausspezifischen Entscheidungen bleiben in jedem Modell unabgestimmt.
 
 | Nr. | Zeile | Befund | Vorgabe |
 |---|---|---|---|
@@ -34,6 +36,8 @@ Dazu kommen Abweichungen, die kein „Fund“ sind, aber eben nicht eure Hausreg
 | 12 | 39 | Ablehnung bei Limit ohne `grund=`-Code | 2 |
 | 13 | 69, 71 | ERROR für Normalfall („keine offenen Buchungen“) und für Warnfall | 3 |
 | 14 | 66, 73 | Dekorationszeilen `==========` | 1 |
+
+Die Spalte „Vorgabe“ verweist auf die Abschnitte des ausgearbeiteten Skills (1 Format, 2 Pflichtfelder, 3 Log-Level, 4 niemals loggen, 5 Fehlerbehandlung). Die Werkzeugwahl (SLF4J) ist kein nummerierter Verstoß der Ausgangsdatei, sondern die sechste Leitfrage aus dem Handout – sie fällt erst im Vergleich der Läufe auf.
 
 ## Warum das im Workshop überzeugt
 
