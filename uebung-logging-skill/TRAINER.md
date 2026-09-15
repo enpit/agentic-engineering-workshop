@@ -2,15 +2,15 @@
 
 ## Didaktische Idee
 
-Die Übung macht die Kernaussage von Folie 46 erfahrbar: *Das Festlegen ist der eigentliche Aufwand – der Skill ist nur das Transportmittel.*
+Die Übung soll die Kernaussage von Folie 46 spürbar machen: *Das Festlegen ist der eigentliche Aufwand – der Skill ist nur das Transportmittel.*
 
-Dafür braucht es einen sichtbaren Kontrast. Der entsteht durch einen **Vergleichslauf ohne Skill** (Schritt 1) und einen **Lauf mit dem selbst geschriebenen Skill** (Schritt 3) auf derselben Datei. Beide Läufe machen die Gruppen selbst – der Vergleichslauf ist keine Vorführung am Beamer mehr, sondern der Einstieg jeder Gruppe an ihrem eigenen Laptop.
+Dafür braucht es einen Kontrast. Der entsteht durch einen **Vergleichslauf ohne Skill** (Schritt 1) und einen **Lauf mit dem selbst geschriebenen Skill** (Schritt 3) auf derselben Datei. Beide Läufe machen die Gruppen selbst. Der Vergleichslauf ist keine Beamer-Vorführung, sondern der Einstieg jeder Gruppe am eigenen Laptop.
 
-**Wichtig für die Moderation:** Der Kontrast liegt *nicht* darin, dass der Agent ohne Vorgabe die Datenschutzverstöße übersieht. Aktuelle Modelle entfernen Kundenname, Session-Token und Verwendungszweck auch unaufgefordert und maskieren IBANs von sich aus. Der Kontrast liegt darin, dass der Agent die **hausspezifischen Entscheidungen selbst trifft** – Maskierungsformat, Log-Level für fachliche Ablehnungen, Ablehnungscodes, Pflichtfelder – und sie in seiner Zusammenfassung so souverän benennt, dass sie wie eine Vorgabe klingen. Zwei Läufe mit demselben Prompt kommen dabei zu unterschiedlichen Ergebnissen. Wer keine Vorgabe macht, bekommt trotzdem eine – nur nicht die eigene, und jedes Mal eine andere.
+**Wichtig für die Moderation:** Der Kontrast liegt *nicht* darin, dass der Agent ohne Vorgabe die Datenschutzverstöße übersieht. Aktuelle Modelle entfernen Kundenname, Session-Token und Verwendungszweck auch unaufgefordert und maskieren IBANs von sich aus. Der Kontrast liegt darin, dass der Agent die **hausspezifischen Entscheidungen selbst trifft** – Maskierungsformat, Log-Level für fachliche Ablehnungen, Ablehnungscodes, Pflichtfelder – und sie in seiner Zusammenfassung so selbstsicher benennt, als wären es Vorgaben. Zwei Läufe mit demselben Prompt kommen zu unterschiedlichen Ergebnissen. Wer keine Vorgabe macht, bekommt trotzdem eine – nur nicht die eigene, und jedes Mal eine andere.
 
-Die Zielgruppe (Anwendungsmanagement, 2nd-Level, Compliance) muss dafür kein Java schreiben. Ihre Aufgabe ist die fachliche: entscheiden, was gelten soll, und es prüfbar formulieren. Das ist genau ihre Rolle gegenüber den umsetzenden Teams (Fokusthema A).
+Die Zielgruppe (Anwendungsmanagement, 2nd-Level, Compliance) muss dafür kein Java schreiben. Ihre Aufgabe ist fachlich: entscheiden, was gelten soll, und es prüfbar formulieren. Das ist ihre Rolle gegenüber den umsetzenden Teams (Fokusthema A).
 
-Logging wurde als Bereich gewählt, weil jedes Team es hat, die Regeln meist halb dokumentiert sind und Verstöße für Compliance-nahe Teilnehmende sofort erkennbar sind (Bankgeheimnis, DSGVO, Secrets).
+Logging wurde als Bereich gewählt, weil jedes Team es hat, die Regeln meist nur halb dokumentiert sind und Verstöße für Compliance-nahe Teilnehmende sofort erkennbar sind (Bankgeheimnis, DSGVO, Secrets).
 
 ## Ablauf (35 Min.)
 
@@ -23,14 +23,14 @@ Logging wurde als Bereich gewählt, weil jedes Team es hat, die Regeln meist hal
 
 ## Erwartete Beobachtungen
 
-- **Ohne Skill** (mit Opus 5 nachgestellt, Modellverhalten variiert – vor dem Workshop einmal probelaufen): Der Agent behebt die technischen Punkte **und** die Datenschutzpunkte. Er entfernt Session-Token und Kundenname, streicht den Verwendungszweck und schreibt sich eine `maskiere()`-Hilfsmethode. Von den 14 Punkten bleiben verlässlich nur die Pflichtfelder offen (10, 11, 12), Punkt 4 nur teilweise (der Betrag bleibt meist stehen).
-- **Die beiden Läufe aus Schritt 1 widersprechen sich.** Im Test stufte der eine Lauf „Tageslimit überschritten“ als WARN ein, der andere als INFO mit der Begründung, das sei ein erwarteter Geschäftsfall. Der eine löschte den ungenutzten `BigDecimal`-Import, der andere ließ ihn bewusst stehen. Das ist der stärkste Moment der Übung – darauf hinarbeiten.
-- **Werkzeugwahl ohne Rückfrage:** Der Agent ersetzt in der Regel das vorhandene SLF4J durch etwas anderes (meist `java.util.logging`) oder baut die Aufrufe um, ohne zu fragen, ob das die Hausbibliothek ist. Das ist eine Entscheidung derselben Art wie das Maskierungsformat und im Handout als Leitfrage „Werkzeuge“ hinterlegt. Gute Gelegenheit zu fragen: „Wer hat euch nach eurem Logging-Framework gefragt?“
-- **Modellvergleich (Bonus in Schritt 1):** Haiku ändert meist weniger und erklärt knapper, Opus räumt umfassender auf und begründet ausführlicher. Die Kernaussage bleibt in allen Modellen dieselbe: Entschieden wird ohne Vorgabe – nur unterschiedlich gründlich. Wenn die Zeit knapp ist, den Bonus streichen; er ist nicht tragend.
-- **Mit Skill**: Der Deckungsgrad bei den Pflichtfeldern hängt direkt an der Schärfe der Formulierung. Typischer Aha-Moment: Eine Gruppe schreibt „IBAN maskieren“ – der Agent liefert `****4711`. Die Nachbargruppe schreibt „Ländercode + Prüfziffer + letzte 4 Stellen“ – und bekommt `DE12****4711`. Beides ist maskiert, nur eines ist die Hausregel.
-- **Bonus in Schritt 3 (Skill ohne `/`-Aufruf):** Der Agent zieht den Skill bei „Verbessere das Logging …“ meist von selbst heran – aber eben nur meist, und nur bei brauchbarer `description`. Gruppen, bei denen er nicht greift, haben in der Regel eine `description` geschrieben, die den Inhalt beschreibt statt den Anlass. Das ist die Brücke zu Folie 51 (Pflege): Die `description` ist Teil der Vorgabe, nicht Beiwerk.
+- **Ohne Skill** (mit Opus 5 nachgestellt, Modellverhalten variiert – vor dem Workshop einmal probelaufen): Der Agent behebt die technischen Punkte **und** die Datenschutzpunkte. Er entfernt Session-Token und Kundenname, streicht den Verwendungszweck und schreibt eine `maskiere()`-Hilfsmethode. Von den 14 Punkten bleiben verlässlich nur die Pflichtfelder offen (10, 11, 12), Punkt 4 nur teilweise (der Betrag bleibt meist stehen).
+- **Die beiden Läufe aus Schritt 1 widersprechen sich.** Im Test stufte der eine Lauf „Tageslimit überschritten“ als WARN ein, der andere als INFO – Begründung: erwarteter Geschäftsfall. Der eine löschte den ungenutzten `BigDecimal`-Import, der andere ließ ihn bewusst stehen. Das ist der stärkste Moment der Übung; darauf hinarbeiten.
+- **Werkzeugwahl ohne Rückfrage:** Der Agent ersetzt in der Regel das vorhandene SLF4J durch etwas anderes (meist `java.util.logging`) oder baut die Aufrufe um, ohne zu fragen, ob das die Hausbibliothek ist. Das ist dieselbe Art Entscheidung wie das Maskierungsformat und steht im Handout als Leitfrage „Werkzeuge“. Gute Gelegenheit zu fragen: „Wer hat euch nach eurem Logging-Framework gefragt?“
+- **Modellvergleich (Bonus in Schritt 1):** Haiku ändert meist weniger und erklärt knapper, Opus räumt umfassender auf und begründet ausführlicher. Die Kernaussage bleibt in allen Modellen dieselbe: Es wird ohne Vorgabe entschieden – nur unterschiedlich gründlich. Wenn die Zeit knapp ist, den Bonus streichen; er ist für den Übungserfolg nicht nötig.
+- **Mit Skill:** Der Deckungsgrad bei den Pflichtfeldern hängt direkt an der Schärfe der Formulierung. Typischer Aha-Moment: Eine Gruppe schreibt „IBAN maskieren“ – der Agent liefert `****4711`. Die Nachbargruppe schreibt „Ländercode + Prüfziffer + letzte 4 Stellen“ – und bekommt `DE12****4711`. Beides ist maskiert, nur eines ist die Hausregel.
+- **Bonus in Schritt 3 (Skill ohne `/`-Aufruf):** Der Agent zieht den Skill bei „Verbessere das Logging …“ meist von selbst heran – aber eben nur meist, und nur bei brauchbarer `description`. Gruppen, bei denen er nicht greift, haben in der Regel eine `description` geschrieben, die den Inhalt beschreibt statt den Anlass. Brücke zu Folie 51 (Pflege): Die `description` gehört zur Vorgabe, sie ist kein Beiwerk.
 - **Häufiger Fehler:** Gruppen schreiben Regeltext, aber keine Beispiele. Darauf hinweisen (Speaker Note Folie 47: „Ein Gegenbeispiel wirkt stärker als drei Absätze Regeltext“).
-- **Zum Hinweis „fragt den Agenten“ in Schritt 2:** Gruppen, die sich Vorschläge geben lassen, sind schneller fertig und haben oft die besseren Formulierungen. Beim Rundgang trotzdem fragen: „Warum gilt das bei euch so?“ Wer den Vorschlag nur übernommen hat, merkt an dieser Frage selbst, dass das Festlegen noch nicht erledigt ist.
+- **Zum Hinweis „fragt den Agenten“ in Schritt 2:** Gruppen, die sich Vorschläge geben lassen, sind schneller fertig und haben oft die besseren Formulierungen. Beim Rundgang trotzdem fragen: „Warum gilt das bei euch so?“ Wer den Vorschlag nur übernommen hat, merkt an der Frage, dass das Festlegen noch aussteht.
 
 ## Inhalt des Pakets
 
@@ -60,7 +60,7 @@ uebung-logging-skill/
 - Gruppen, die Weg A wählen (Skill selbst anlegen), brauchen den Hinweis auf den Frontmatter-Kopf: ohne `name:` und `description:` taucht der Skill nicht als `/`-Befehl auf. Steht im Handout, wird aber gern überlesen.
 - Für das Bearbeiten außerhalb von Claude Code stehen `vi`, `nano` und `cat` zur Verfügung; das Handout nennt die Befehle. Wer `vi` öffnet und nicht mehr herauskommt: `:q!`.
 - Fallback bei Technikproblemen: Schritt 1 und Schritt 3 vorab aufzeichnen (Speaker Note Folie 42).
-- Der Beispielcode ist fiktiv (Bank „Beispielbank“, keine echten Daten). Er darf ohne Bedenken an das Modell übergeben werden – das ist Weg 3 aus Folie 39 (Fehlerbild nachbauen statt Produktionsdaten übergeben) und kann als Nebenbemerkung genutzt werden.
+- Der Beispielcode ist fiktiv (Bank „Beispielbank“, keine echten Daten). Er darf ohne Bedenken an das Modell übergeben werden – das ist Weg 3 aus Folie 39 (Fehlerbild nachbauen statt Produktionsdaten übergeben) und eignet sich als Nebenbemerkung.
 
 ## Varianten
 

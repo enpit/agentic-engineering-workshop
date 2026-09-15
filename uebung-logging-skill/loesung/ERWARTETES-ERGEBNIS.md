@@ -10,13 +10,13 @@ Verlässlich offen bleiben nur:
 
 | Nr. | Warum ohne Vorgabe nicht erreichbar |
 |---|---|
-| 4 (teilweise) | Der Betrag bleibt stehen, teils im selben Eintrag wie die maskierte IBAN. Dass das bei euch zusammen nicht geloggt werden darf, ist nicht ableitbar. |
+| 4 (teilweise) | Der Betrag bleibt stehen, teils im selben Eintrag wie die maskierte IBAN. Dass das bei euch zusammen nicht geloggt werden darf, lässt sich daraus nicht ableiten. |
 | 10, 12 | `grund=`-Codes statt Freitext. Der Agent schreibt „Tageslimit überschritten“ als Satz – auswertbar ist nur ein Code. |
 | 11 | `ergebnis=OK/ABGELEHNT/FEHLER` als festes Feld. |
 
 Dazu kommen Abweichungen, die kein „Fund“ sind, aber eben nicht eure Hausregel: Maskierungsformat (`****4711` statt `DE12****4711`), Level für fachliche Ablehnungen (INFO statt WARN), Einstiegs-Log auf DEBUG statt INFO, Nachrichtenform mit Satzzeichen statt reiner `schluessel=wert`-Paare – und die **Werkzeugwahl**: Der Agent tauscht das vorhandene SLF4J meist ungefragt aus (in der Regel gegen `java.util.logging`), ohne dass jemand nach der Hausbibliothek gefragt hätte.
 
-**Für die Moderation entscheidend:** Zwei Läufe ohne Skill mit identischem Prompt kamen zu *unterschiedlichen* Entscheidungen (Tageslimit einmal WARN, einmal INFO). Die Aussage der Übung ist deshalb nicht „der Agent findet es nicht“, sondern „der Agent entscheidet es für euch – jedes Mal neu, und er sagt es so selbstbewusst, dass es wie eine Vorgabe klingt“.
+**Für die Moderation entscheidend:** Zwei Läufe ohne Skill mit identischem Prompt kamen zu *unterschiedlichen* Entscheidungen (Tageslimit einmal WARN, einmal INFO). Die Aussage der Übung ist deshalb nicht „der Agent findet es nicht“, sondern „der Agent entscheidet es für euch – jedes Mal neu, und er formuliert es so selbstsicher, dass es wie eine Vorgabe klingt“.
 
 **Modellwechsel (Bonus in Schritt 1):** Haiku ändert tendenziell weniger und begründet knapper, Opus räumt umfassender auf. Die offenen Punkte oben verschieben sich dadurch in der Menge, nicht in der Art: Die hausspezifischen Entscheidungen bleiben in jedem Modell unabgestimmt.
 
@@ -41,6 +41,6 @@ Die Spalte „Vorgabe“ verweist auf die Abschnitte des ausgearbeiteten Skills 
 
 ## Warum das im Workshop überzeugt
 
-Der Unterschied zwischen dem Lauf ohne Skill und dem Lauf mit Skill liegt fast vollständig in Vorgabe 2 (Pflichtfelder) und in der **Form** der Vorgaben 3 und 4 – nicht mehr darin, *ob* sensible Daten entfernt werden, sondern *nach welcher Regel*. Welche Maskierung, welcher Ablehnungscode, welches Level für eine fachliche Ablehnung: Das sind Entscheidungen, die **das Team treffen muss**, weil sie von Haus zu Haus unterschiedlich sind. Ein Modell kann sie nicht erraten – es trifft sie trotzdem, nur eben unabgestimmt und nicht reproduzierbar.
+Der Unterschied zwischen dem Lauf ohne Skill und dem Lauf mit Skill liegt fast vollständig in Vorgabe 2 (Pflichtfelder) und in der **Form** der Vorgaben 3 und 4 – nicht mehr darin, *ob* sensible Daten entfernt werden, sondern *nach welcher Regel*. Welche Maskierung, welcher Ablehnungscode, welches Level für eine fachliche Ablehnung: Das muss **das Team entscheiden**, weil es von Haus zu Haus unterschiedlich ist. Ein Modell kann das nicht erraten – es entscheidet trotzdem, nur unabgestimmt und nicht reproduzierbar.
 
-Genau das ist die Aussage von Folie 46, Schritt 1: Der Aufwand liegt im Festlegen, nicht im Übergeben.
+Das ist die Aussage von Folie 46, Schritt 1: Der Aufwand liegt im Festlegen, nicht im Übergeben.
